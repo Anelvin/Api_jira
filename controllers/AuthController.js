@@ -1,4 +1,5 @@
 import { User } from '../database/db';
+import { StatusCodes } from 'http-status-codes';
 
 const AuthController = {};
 
@@ -7,9 +8,8 @@ AuthController.signIn = async (req, res, next) => {
 };
 
 AuthController.signUp = async (req, res, next) => {
-    console.log(req.body);
     const newUser = await User.create(req.body);
-    res.json(newUser);
+    return res.status(StatusCodes.CREATED).json({'message':'User created!', data: newUser});
 };
 
 export default AuthController;
