@@ -6,6 +6,8 @@ export default (sequelize, type) => {
             autoIncrement: true
         },
         name: type.STRING,
-        email: type.STRING
+        surname: type.STRING,
+        email: type.STRING,
+        password: type.STRING
     });
 }

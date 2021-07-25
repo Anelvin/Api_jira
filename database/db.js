@@ -8,11 +8,12 @@ const sequelize = new Sequelize('jira', 'root', '', {
 
 const User = UserModel(sequelize, Sequelize);
 
-sequelize.sync({ force: false })
-    .then(() => {
-        console.log('Tablas sincronizadas');
-    });
+sequelize.sync({ force: true })
+.then(() => {
+    console.log('Tablas sincronizadas');
+});
 
-export default {
+
+export {
     User
 };
