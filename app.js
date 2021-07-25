@@ -1,16 +1,22 @@
 import express from 'express';
-// import db from './models/index.js';
 import morgan from 'morgan';
+import userRoute from './routes/user';
 const app = express();
 
 import databse from './database/db.js';
 
+//Settings
 app.set('port', process.env.PORT || 3001);
 
-// app.use(db);
+//Midlewares
+app.use(express.json());
+app.use(express.urlencoded({extended: false}))
 
+//Routes
 app.get('/', (req, res, next) => {
     return res.send('API JIRA');
 });
+
+app.use('/auth', userRoute);
 
 app.listen(app.get('port'), () => console.log(`Server on port ${app.get('port')}`));
