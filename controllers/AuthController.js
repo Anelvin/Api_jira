@@ -1,11 +1,12 @@
 import { User } from '../database/db';
 import { StatusCodes } from 'http-status-codes';
-import { createUser } from '../services/userService';
+import { createUser, signIn } from '../services/userService';
 
 const AuthController = {};
 
 AuthController.signIn = async (req, res, next) => {
-    return res.send('Login');
+    const data = await signIn(req.body);
+    return res.status(StatusCodes.OK).json({ data })
 };
 
 AuthController.signUp = async (req, res, next) => {
