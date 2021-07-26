@@ -2,7 +2,8 @@ import { User } from '../database/db';
 import { saltRounds } from '../constants/constants';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { StatusCodes } from 'http-status-codes';
+import { OK, StatusCodes } from 'http-status-codes';
+import { statusOk, unauthorized } from '../constants/responses';
 
 async function createUser(data){
     const user = data;
@@ -25,20 +26,12 @@ async function signIn(data){
                 email: user.email
             }
             const token = jwt.sign(payload, 'secret', { expiresIn: '2h'});
-            return {
-                token
-            }
+            return statusOk(token);
         } else {
-            return {
-                message: 'Unauthorized',
-                code: StatusCodes.UNAUTHORIZED
-            }  
+            return unauthorized();
         }
     } else {
-        return {
-            message: 'Unauthorized',
-            code: StatusCodes.UNAUTHORIZED
-        } 
+        return unauthorized();
     }
 }
 
