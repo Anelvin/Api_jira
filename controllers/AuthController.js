@@ -1,6 +1,6 @@
 import { User } from '../database/db';
 import { StatusCodes } from 'http-status-codes';
-import { createUser, signIn } from '../services/userService';
+import { createUser, signIn } from '../services/authService';
 
 const AuthController = {};
 
