@@ -13,7 +13,7 @@ async function signUp(data){
         id: newUser.id
     }
     const token = jwt.sign(payload, 'secret', { expiresIn: '2h' })
-    return statusOk({token});
+    return { token }
 }
 
 async function signIn(data){
@@ -30,7 +30,7 @@ async function signIn(data){
                 id: user.id
             }
             const token = jwt.sign(payload, 'secret', { expiresIn: '2h'});
-            return statusOk({token});
+            return { token };
         } else {
             return unauthorized();
         }
