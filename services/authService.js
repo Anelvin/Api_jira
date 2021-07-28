@@ -2,15 +2,18 @@ import { User } from '../database/db';
 import { saltRounds } from '../constants/constants';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
-import { OK, StatusCodes } from 'http-status-codes';
 import { statusOk, unauthorized } from '../constants/responses';
 
-async function createUser(data){
+async function signUp(data){
     const user = data;
     user.password = await bcrypt.hash(user.password, saltRounds);
     const newUser = await User.create(user);
-    delete newUser.password;
-    return newUser;
+    const payload = {
+        email: newUser.email,
+        id: newUser.id
+    }
+    const token = jwt.sign(payload, 'secret', { expiresIn: '2h' })
+    return { token }
 }
 
 async function signIn(data){
@@ -23,10 +26,11 @@ async function signIn(data){
         const passwordCorrect = await bcrypt.compare(data.password, user.password);
         if(passwordCorrect === true){
             const payload = {
-                email: user.email
+                email: user.email,
+                id: user.id
             }
             const token = jwt.sign(payload, 'secret', { expiresIn: '2h'});
-            return statusOk(token);
+            return { token };
         } else {
             return unauthorized();
         }
@@ -36,6 +40,6 @@ async function signIn(data){
 }
 
 export {
-    createUser,
+    signUp,
     signIn
 }
