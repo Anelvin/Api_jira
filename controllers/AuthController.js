@@ -5,14 +5,14 @@ import { signUp, signIn } from '../services/authService';
 const AuthController = {};
 
 AuthController.signIn = async (req, res, next) => {
-    const token = await signIn(req.body);
-    return res.status(StatusCodes.OK).json(token)
+    const dataUser = await signIn(req.body);
+    return res.status(StatusCodes.OK).json(dataUser)
 };
 
 AuthController.signUp = async (req, res, next) => {
-    const token = await signUp(req.body);
+    const dataUser = await signUp(req.body);
     try {
-        return res.status(StatusCodes.CREATED).json({'message':'User created!', token});
+        return res.status(StatusCodes.CREATED).json(dataUser);
     } catch (error) {
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR);
     }
