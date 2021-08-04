@@ -1,10 +1,10 @@
 import { User } from '../database/db';
-import { saltRounds } from '../constants/constants';
+import { saltRounds, secret } from '../constants/constants';
 import * as bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { statusOk, unauthorized } from '../constants/responses';
 
-async function signUp(data){
+export async function signUp(data){
     const user = data;
     user.password = await bcrypt.hash(user.password, saltRounds);
     const newUser = await User.create(user);
@@ -12,11 +12,11 @@ async function signUp(data){
         email: newUser.email,
         id: newUser.id
     }
-    const token = jwt.sign(payload, 'secret', { expiresIn: '2h' })
+    const token = jwt.sign(payload, secret, { expiresIn: '2h' })
     return { token, user: newUser }
 }
 
-async function signIn(data){
+export async function signIn(data){
     const user = await User.findOne({
         where: {
             email: data.email
@@ -29,7 +29,7 @@ async function signIn(data){
                 email: user.email,
                 id: user.id
             }
-            const token = jwt.sign(payload, 'secret', { expiresIn: '2h'});
+            const token = jwt.sign(payload, secret, { expiresIn: '2h'});
             return { token, user };
         } else {
             return unauthorized();
@@ -37,9 +37,4 @@ async function signIn(data){
     } else {
         return unauthorized();
     }
-}
-
-export {
-    signUp,
-    signIn
 }
