@@ -1,6 +1,7 @@
 import express from 'express';
 import morgan from 'morgan';
 import authRoutes from './routes/auth';
+import userRoutes from './routes/UserRoutes';
 const app = express();
 
 import databse from './database/db.js';
@@ -23,6 +24,7 @@ app.use(express.urlencoded({extended: false}))
 app.get('/', (req, res, next) => {
     return res.send('API JIRA');
 });
+app.use('/users', userRoutes);
 
 app.use('/auth', authRoutes);
 
