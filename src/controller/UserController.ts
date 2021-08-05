@@ -4,26 +4,27 @@ import {User} from "../entity/User";
 
 class UserController {
 
-    static all = async(request: Request, response: Response, next: NextFunction) => {
+    static findAll = async(req: Request, res: Response, next: NextFunction) => {
         const userRepository = getRepository(User);
         const users = await userRepository.find(); 
-        return response.status(200).json( { users });
+        return res.status(200).json( { users });
     }
 
-    async one(request: Request, response: Response, next: NextFunction) {
+    static findOne = async (req: Request, res: Response, next: NextFunction) => {
         const userRepository = getRepository(User);
-        return userRepository.findOne(request.params.id);
+        const user = await userRepository.findOne(req.params.id);
+        return res.status(200).json({ user });
     }
 
-    static save = async (request: Request, response: Response, next: NextFunction) => {
+    static create = async (req: Request, res: Response, next: NextFunction) => {
         const userRepository = getRepository(User);
-        return response.send( await userRepository.save(request.body));
+        return res.status(201).json({user: await userRepository.save(req.body)});
     }
 
-    async remove(request: Request, response: Response, next: NextFunction) {
+    static delete = async (req: Request, res: Response, next: NextFunction) => {
         const userRepository = getRepository(User);
-        let userToRemove = await userRepository.findOne(request.params.id);
-        await userRepository.remove(userToRemove);
+        let userToRemove = await userRepository.findOne(req.params.id);
+        return res.status(200).json({ user: await userRepository.remove(userToRemove) })
     }
 
 }
