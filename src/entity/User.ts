@@ -1,6 +1,6 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import config from '../config/config';
-import * as bcrypt from 'bcryptjs';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable} from "typeorm";
+import { Project } from "./Project";
+
 @Entity()
 export class User {
 
@@ -19,11 +19,17 @@ export class User {
     @Column()
     password: string
 
+    @Column({ nullable: true })
+    image: string
+
     @Column({ name: 'created_at', default: () => 'CURRENT_TIMESTAMP' })
     createdAt: Date;
 
     @Column({ name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
+    @ManyToMany(() => Project)
+    @JoinTable()
+    projects: Project[]
 }
 
