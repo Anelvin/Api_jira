@@ -1,3 +1,4 @@
 export default {
-    jwtSecret: 'Secret'
+    jwtSecret: 'Secret',
+    saltRounds: 10
 };

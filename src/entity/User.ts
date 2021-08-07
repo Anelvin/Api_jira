@@ -1,5 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-
+import config from '../config/config';
+import * as bcrypt from 'bcryptjs';
 @Entity()
 export class User {
 
@@ -25,3 +26,4 @@ export class User {
     updatedAt: Date;
 
 }
+
