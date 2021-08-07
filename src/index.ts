@@ -5,6 +5,7 @@ import * as bodyParser from "body-parser";
 import * as cors from 'cors';
 import userRoutes from './routes/userRoutes';
 import authRoutes from './routes/authRoutes';
+import projectRoutes from './routes/projectRoutes';
 
 createConnection().then(async connection => {
 
@@ -17,8 +18,9 @@ createConnection().then(async connection => {
     }));
 
     //routes
-    app.use('/users', userRoutes);
     app.use('/auth', authRoutes);
+    app.use('/users', userRoutes);
+    app.use('/projects', projectRoutes);
     // setup express app here
     // ...
 
