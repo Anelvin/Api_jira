@@ -16,11 +16,6 @@ class UserController {
         return res.status(200).json({ user });
     }
 
-    static create = async (req: Request, res: Response, next: NextFunction) => {
-        const userRepository = getRepository(User);
-        return res.status(201).json({user: await userRepository.save(req.body)});
-    }
-
     static delete = async (req: Request, res: Response, next: NextFunction) => {
         const userRepository = getRepository(User);
         let userToRemove = await userRepository.findOne(req.params.id);
