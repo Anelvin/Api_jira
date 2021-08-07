@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { StatusCodes } from 'http-status-codes';
 import * as jwt from 'jsonwebtoken';
 import config from '../config/config';
 
@@ -11,7 +12,7 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
             jwtPayload = <any>jwt.verify(token, config.jwtSecret);
             res.locals.jwtPayload = jwtPayload;
         } catch (error) {
-            res.status(401).send({'message':'Unauthorized'});
+            res.status(401).send({'message':'Unauthorized', 'code': StatusCodes.UNAUTHORIZED});
             return;
         }
     
@@ -22,6 +23,6 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         res.setHeader("token", newToken);
         next();
     } else {
-        return res.status(401).send({'message':'Unauthorized'});
+        return res.status(401).send({'message':'Unauthorized', 'code': StatusCodes.UNAUTHORIZED});
     }
 }
