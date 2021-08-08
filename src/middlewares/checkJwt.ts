@@ -26,3 +26,8 @@ export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
         return res.status(401).send({'message':'Unauthorized', 'code': StatusCodes.UNAUTHORIZED});
     }
 }
+
+export const decodedToken = (token) => {
+    const payload = jwt.decode(token);
+    return payload;
+}

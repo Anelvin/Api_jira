@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from './User';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Project {
@@ -21,4 +22,7 @@ export class Project {
     @Column({ name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date
 
+    @ManyToMany(() => User, user => user.projects)
+    @JoinTable()
+    users: User[]
 }
