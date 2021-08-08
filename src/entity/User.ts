@@ -28,8 +28,7 @@ export class User {
     @Column({ name: 'updated_at', default: () => 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @ManyToMany(() => Project)
-    @JoinTable()
-    projects: Project[]
+    @ManyToMany(() => Project, project => project.users)
+    projects: Project[];
 }
 
